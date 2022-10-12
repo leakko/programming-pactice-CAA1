@@ -1,0 +1,120 @@
+#include <stdlib.h>
+#include <assert.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include "project.h"
+
+// Parse a tDate from string information
+void date_parse(tDate* date, const char* text)
+{
+    // Check output data
+    assert(date != NULL);
+    
+    // Check input date
+    assert(text != NULL);
+    assert(strlen(text) == 10);
+    
+    // Parse the input date
+    sscanf(text, "%d/%d/%d", &(date->day), &(date->month), &(date->year));
+}
+
+// Compare two tDate structures and return true if they contain the same value or false otherwise.
+bool date_equals(tDate date1, tDate date2)
+{
+    return (date1.day == date2.day && date1.month == date2.month && date1.year == date2.year); 
+}
+
+// EX2: Implement your methods here....
+
+// Initialize the projects data
+void projectData_init(tProjectData* data)
+{
+    data->numProjects = 0;
+}
+
+// Get the number of projects
+int projectData_len(tProjectData data)
+{
+    return data.numProjects;
+}
+
+// Get a project
+void projectData_get(tProjectData data, int index, char* buffer)
+{
+    tProject selectedProject = data.projects[index];
+
+    sprintf(buffer, "%d/%d/%d;%s;%s;%s;%s;%f;%d", 
+    selectedProject.date.day, selectedProject.date.month, selectedProject.date.year, selectedProject.ong, 
+    selectedProject.ongName, selectedProject.city, selectedProject.code, selectedProject.cost, selectedProject.numPeople);
+
+}
+
+// Parse input from CSVEntry
+void project_parse(tProject* proj, tCSVEntry entry)
+{
+    // We parte entry data in order:
+
+    // Date
+    char stringDate[DATE_STRING_LENGTH];
+    csv_getAsString(entry, 0, stringDate, DATE_STRING_LENGTH);
+    tDate date;
+    date_parse(&date, stringDate);
+
+    proj->date.day = date.day;
+    proj->date.month = date.month;
+    proj->date.year = date.year;
+
+    // Ong
+    char ong[MAX_ONG_CODE];
+    csv_getAsString(entry, 1, ong, MAX_ONG_CODE);
+    strcpy(proj->ong, ong);
+
+    // OngName
+    char ongName[MAX_NAME];
+    csv_getAsString(entry, 2, ongName, MAX_NAME);
+    strcpy(proj->ongName, ongName);
+
+    // City
+    char city[MAX_NAME];
+    csv_getAsString(entry, 3, city, MAX_NAME);
+    strcpy(proj->city, city);
+
+    // Code
+    char code[MAX_ONG_CODE];
+    csv_getAsString(entry, 4, code, MAX_ONG_CODE);
+    strcpy(proj->code, code);
+
+    // Cost
+    float cost = csv_getAsReal(entry, 5);
+    proj->cost = cost;
+
+    // Number of people
+    int numPeople = csv_getAsInteger(entry, 6);
+    proj->numPeople = numPeople;
+}
+
+
+// Add project to project data
+void projectData_add(tProjectData* data, tProject proj)
+{
+    int i;
+    bool found = false;
+
+    while(i < data->numProjects && !found) {
+        if(
+            strcmp(data->projects[i].code, proj.code) == 0 && 
+            strcmp(data->projects[i].city, proj.city) == 0 && 
+            date_equals(data->projects[i].date, proj.date)
+        ) {
+            data->projects[i].cost = data->projects[i].cost + proj.cost;
+            data->projects[i].numPeople = data->projects[i].numPeople + proj.numPeople;
+            bool found = true;
+        }
+        i++;
+    }
+
+    if(!found) {
+        data->projects[data->numProjects] = proj;
+    }
+}
