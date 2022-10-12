@@ -65,5 +65,7 @@ void project_parse(tProject* proj, tCSVEntry entry);
 // Add project to project data
 void projectData_add(tProjectData* data, tProject proj);
 
+// Delete project
+void projectData_del(tProjectData* data, char* code, char* city, tDate date, float cost, int numPeople);
 
 #endif

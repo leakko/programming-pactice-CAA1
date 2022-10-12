@@ -99,8 +99,9 @@ void project_parse(tProject* proj, tCSVEntry entry)
 void projectData_add(tProjectData* data, tProject proj)
 {
     int i;
-    bool found = false;
+    bool found;
 
+    found = false;
     while(i < data->numProjects && !found) {
         if(
             strcmp(data->projects[i].code, proj.code) == 0 && 
@@ -109,12 +110,35 @@ void projectData_add(tProjectData* data, tProject proj)
         ) {
             data->projects[i].cost = data->projects[i].cost + proj.cost;
             data->projects[i].numPeople = data->projects[i].numPeople + proj.numPeople;
-            bool found = true;
+            found = true;
         }
         i++;
     }
 
     if(!found) {
         data->projects[data->numProjects] = proj;
+    }
+}
+
+void projectData_del(tProjectData* data, char* code, char* city, tDate date, float cost, int numPeople)
+{
+    int i;
+    bool found;
+
+    found = false;
+    while(i < data->numProjects && !found) {
+        if(
+            strcmp(data->projects[i].code, code) == 0 && 
+            strcmp(data->projects[i].city, city) == 0 && 
+            date_equals(data->projects[i].date, date)
+        ) {
+            if(data->projects[i].cost - cost <= 0 || data->projects[i].numPeople - numPeople <= 0) {
+                data->numProjects--;
+            } else {
+                data->projects[i].cost = data->projects[i].cost - cost;
+                data->projects[i].numPeople = data->projects[i].numPeople - numPeople;
+            }
+        }
+        i++;
     }
 }
