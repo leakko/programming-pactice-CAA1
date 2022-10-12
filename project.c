@@ -101,6 +101,7 @@ void projectData_add(tProjectData* data, tProject proj)
     int i;
     bool found;
 
+    i = 0;
     found = false;
     while(i < data->numProjects && !found) {
         if(
@@ -125,6 +126,7 @@ void projectData_del(tProjectData* data, char* code, char* city, tDate date, flo
     int i;
     bool found;
 
+    i = 0;
     found = false;
     while(i < data->numProjects && !found) {
         if(
