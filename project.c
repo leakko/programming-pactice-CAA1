@@ -130,9 +130,11 @@ void projectData_add(tProjectData* data, tProject proj)
 void projectData_del(tProjectData* data, char* code, char* city, tDate date, float cost, int numPeople)
 {
     int i;
+    int j;
     bool found;
 
     i = 0;
+    j = 0;
     found = false;
     while(i < data->numProjects && !found) {
         if(
@@ -141,6 +143,11 @@ void projectData_del(tProjectData* data, char* code, char* city, tDate date, flo
             date_equals(data->projects[i].date, date)
         ) {
             if(data->projects[i].cost - cost <= 0 || data->projects[i].numPeople - numPeople <= 0) {
+                j = i;
+                while(j < data->numProjects - 1) {
+                    data->projects[j] = data->projects[j + 1];
+                    j++;
+                }
                 data->numProjects--;
             } else {
                 data->projects[i].cost = data->projects[i].cost - cost;
