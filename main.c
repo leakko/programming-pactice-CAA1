@@ -39,11 +39,18 @@ int main(int argc, char **argv)
     
     // Initialize the project data
     projectData_init(&projectData);
+    // printf("Expected: %d - result: %d\n", 0, projectData.numProjects);
     
     // Add data
     for(i = 0; i < csv_numEntries(test_data); i++) {
         // Get the project from the entry
         project_parse(&project, csv_getEntry(test_data, i)[0]);
+
+        // printf("[Iteration %d] Expected: %d - result: %d\n", i, 11, project.date.day);
+        // printf("[Iteration %d] Expected: %d - result: %d\n", i, 10, project.date.month);
+        // printf("[Iteration %d] Expected: %d - result: %d\n", i, 2022, project.date.year);
+
+        // printf("[Iteration %d] Expected: %s - result: %s\n", i, "ACN", project.ong);
         
         // Add new project to the list of projects
         projectData_add(&projectData, project);
@@ -65,6 +72,7 @@ int main(int argc, char **argv)
     for(i = 0; i < csv_numEntries(test_data); i++) {
         // Get the project from the entry
         project_parse(&project, csv_getEntry(test_data, i)[0]);
+        // printf("ong from parse: %s\n", project.ong);
         
         // Add new project to the list of projects
         projectData_add(&projectData, project);

@@ -44,15 +44,19 @@ void projectData_get(tProjectData data, int index, char* buffer)
 {
     tProject selectedProject = data.projects[index];
 
-    sprintf(buffer, "%d/%d/%d;%s;%s;%s;%s;%f;%d", 
+    sprintf(buffer, "%d/%d/%d;%s;%s;%s;%s;%.2f;%d", 
     selectedProject.date.day, selectedProject.date.month, selectedProject.date.year, selectedProject.ong, 
     selectedProject.ongName, selectedProject.city, selectedProject.code, selectedProject.cost, selectedProject.numPeople);
+
+    // printf("project ong info:\n%s\n",selectedProject.ong);
+    // printf("projectData_get result:\n%s\n",buffer);
 
 }
 
 // Parse input from CSVEntry
 void project_parse(tProject* proj, tCSVEntry entry)
 {
+    // printf("entry: %s\n", entry.fields[0]);
     // We parte entry data in order:
 
     // Date
@@ -66,23 +70,24 @@ void project_parse(tProject* proj, tCSVEntry entry)
     proj->date.year = date.year;
 
     // Ong
-    char ong[MAX_ONG_CODE];
-    csv_getAsString(entry, 1, ong, MAX_ONG_CODE);
+    char ong[MAX_ONG_CODE + 1];
+    csv_getAsString(entry, 1, ong, MAX_ONG_CODE + 1);
+    // printf("Copying ong: %s\n", ong);
     strcpy(proj->ong, ong);
 
     // OngName
-    char ongName[MAX_NAME];
-    csv_getAsString(entry, 2, ongName, MAX_NAME);
+    char ongName[MAX_NAME + 1];
+    csv_getAsString(entry, 2, ongName, MAX_NAME + 1);
     strcpy(proj->ongName, ongName);
 
     // City
-    char city[MAX_NAME];
-    csv_getAsString(entry, 3, city, MAX_NAME);
+    char city[MAX_NAME + 1];
+    csv_getAsString(entry, 3, city, MAX_NAME + 1);
     strcpy(proj->city, city);
 
     // Code
-    char code[MAX_ONG_CODE];
-    csv_getAsString(entry, 4, code, MAX_ONG_CODE);
+    char code[MAX_ONG_CODE + 1];
+    csv_getAsString(entry, 4, code, MAX_ONG_CODE + 1);
     strcpy(proj->code, code);
 
     // Cost

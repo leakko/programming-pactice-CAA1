@@ -32,10 +32,10 @@ bool date_equals(tDate date1, tDate date2);
 // I will use static memory tuples for simplicity
 typedef struct _tProject {
     tDate date;
-    char ong[MAX_ONG_CODE];
-    char ongName[MAX_NAME];
-    char city[MAX_NAME];
-    char code[MAX_PROJECT_CODE];
+    char ong[MAX_ONG_CODE + 1];
+    char ongName[MAX_NAME + 1];
+    char city[MAX_NAME + 1];
+    char code[MAX_PROJECT_CODE + 1];
     float cost;
     int numPeople;
 } tProject;
