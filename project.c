@@ -118,6 +118,7 @@ void projectData_add(tProjectData* data, tProject proj)
 
     if(!found) {
         data->projects[data->numProjects] = proj;
+        data->numProjects++;
     }
 }
 
