@@ -86,8 +86,8 @@ void project_parse(tProject* proj, tCSVEntry entry)
     strcpy(proj->city, city);
 
     // Code
-    char code[MAX_ONG_CODE + 1];
-    csv_getAsString(entry, 4, code, MAX_ONG_CODE + 1);
+    char code[MAX_PROJECT_CODE + 1];
+    csv_getAsString(entry, 4, code, MAX_PROJECT_CODE + 1);
     strcpy(proj->code, code);
 
     // Cost

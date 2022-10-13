@@ -51,6 +51,8 @@ int main(int argc, char **argv)
         // printf("[Iteration %d] Expected: %d - result: %d\n", i, 2022, project.date.year);
 
         // printf("[Iteration %d] Expected: %s - result: %s\n", i, "ACN", project.ong);
+
+        // printf("[Iteration %d] Expected: %s - result: %s\n", i, "ACN", project.ong);
         
         // Add new project to the list of projects
         projectData_add(&projectData, project);
