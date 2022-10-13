@@ -48,15 +48,11 @@ void projectData_get(tProjectData data, int index, char* buffer)
     selectedProject.date.day, selectedProject.date.month, selectedProject.date.year, selectedProject.ong, 
     selectedProject.ongName, selectedProject.city, selectedProject.code, selectedProject.cost, selectedProject.numPeople);
 
-    // printf("project ong info:\n%s\n",selectedProject.ong);
-    // printf("projectData_get result:\n%s\n",buffer);
-
 }
 
 // Parse input from CSVEntry
 void project_parse(tProject* proj, tCSVEntry entry)
 {
-    // printf("entry: %s\n", entry.fields[0]);
     // We parte entry data in order:
 
     // Date
@@ -72,7 +68,6 @@ void project_parse(tProject* proj, tCSVEntry entry)
     // Ong
     char ong[MAX_ONG_CODE + 1];
     csv_getAsString(entry, 1, ong, MAX_ONG_CODE + 1);
-    // printf("Copying ong: %s\n", ong);
     strcpy(proj->ong, ong);
 
     // OngName
