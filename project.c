@@ -53,7 +53,7 @@ void projectData_get(tProjectData data, int index, char* buffer)
 // Parse input from CSVEntry
 void project_parse(tProject* proj, tCSVEntry entry)
 {
-    // We parte entry data in order:
+    // We parse entry data in order:
 
     // Date
     char stringDate[DATE_STRING_LENGTH];
